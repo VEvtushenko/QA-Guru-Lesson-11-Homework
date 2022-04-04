@@ -1,19 +1,14 @@
 package one.nlmk;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimpleTest {
 
