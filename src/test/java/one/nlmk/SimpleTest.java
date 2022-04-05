@@ -20,48 +20,51 @@ public class SimpleTest {
 
     @Test
     void testPracticeFormForCorrectInput() {
-        String FirstName = "Molly",
-               LastName = "Millions",
-               Email = "molly@tibacity.com",
-               MobileNumber = "9052128506",
-               Adress = "Main street",
-               State = "NCR",
-               City = "Delhi";
+        String  firstName = "Molly",
+                lastName = "Millions",
+                email = "molly@tibacity.com",
+                mobileNumber = "9052128506",
+                address = "Main street",
+                state = "NCR",
+                city = "Delhi",
+                birthYear = "1970",
+                birthMonth = "January",
+                birthDay = "15";
 
 
         open("/automation-practice-form");
         zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
 
         // Заполняем форму
-        $("[id=firstName]").setValue(FirstName);
-        $("[id=lastName]").setValue(LastName);
-        $("[id=userEmail]").setValue(Email);
-        $("[id=genterWrapper]").$(byText("Female")).click(); // неоптимальное решение, узнать как работать с selectRadio
-        $("[id=userNumber]").setValue(MobileNumber);
+        $("[id=firstName]").setValue(firstName);
+        $("[id=lastName]").setValue(lastName);
+        $("[id=userEmail]").setValue(email);
+        $("[id=genterWrapper]").$(byText("Female")).click();
+        $("[id=userNumber]").setValue(mobileNumber);
         $("[id=dateOfBirthInput]").click();
-        $(".react-datepicker__month-select").selectOption("January");
-        $(".react-datepicker__year-select").selectOption("1970");
-        $("[aria-label='Choose Thursday, January 15th, 1970']").click();  // Не оптимальное решение, нельзя сделать переменной
+        $(".react-datepicker__year-select").selectOption(birthYear);
+        $(".react-datepicker__month-select").selectOption(birthMonth);
+        $(".react-datepicker__month").$(byText(birthDay)).click();
         $("[id=subjectsInput]").setValue("Economics").pressEnter();
         $(".custom-checkbox").$(byText("Sports")).click();
         $("[id=uploadPicture]").uploadFile(new File("src/test/resources/images.jpg"));
-        $("[id=currentAddress]").setValue(Adress);
-        $("[id=react-select-3-input]").setValue(State).pressEnter();
-        $("[id=react-select-4-input]").setValue(City).pressEnter();
+        $("[id=currentAddress]").setValue(address);
+        $("[id=react-select-3-input]").setValue(state).pressEnter();
+        $("[id=react-select-4-input]").setValue(city).pressEnter();
 
         $("#submit").click(); // Подтвердаем ввод данных
 
         // Проверяем результаты. Необходимо узнать как проверить соответствие заголовков и содержания строк в таблице
         $("[class=table-responsive]").shouldHave(
-                text( FirstName + " " + LastName),
-                text(Email),
-                text(MobileNumber),
+                text(firstName + " " + lastName),
+                text(email),
+                text(mobileNumber),
                 text("Female"),
-                text("15 January,1970"),
+                text(birthDay + " " + birthMonth + "," + birthYear),
                 text("Economics"),
                 text("Sports"),
                 text("images.jpg"),
-                text(Adress),
-                text( State + " " + City ));
+                text(address),
+                text(state + " " + city));
     }
 }
