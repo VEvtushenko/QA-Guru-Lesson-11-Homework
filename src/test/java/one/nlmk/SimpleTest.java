@@ -36,26 +36,26 @@ public class SimpleTest {
         zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
 
         // Заполняем форму
-        $("[id=firstName]").setValue(firstName);
-        $("[id=lastName]").setValue(lastName);
-        $("[id=userEmail]").setValue(email);
-        $("[id=genterWrapper]").$(byText("Female")).click();
-        $("[id=userNumber]").setValue(mobileNumber);
-        $("[id=dateOfBirthInput]").click();
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(email);
+        $("#genterWrapper").$(byText("Female")).click();
+        $("#userNumber").setValue(mobileNumber);
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption(birthYear);
         $(".react-datepicker__month-select").selectOption(birthMonth);
         $(".react-datepicker__month").$(byText(birthDay)).click();
-        $("[id=subjectsInput]").setValue("Economics").pressEnter();
+        $("#subjectsInput").setValue("Economics").pressEnter();
         $(".custom-checkbox").$(byText("Sports")).click();
-        $("[id=uploadPicture]").uploadFile(new File("src/test/resources/images.jpg"));
-        $("[id=currentAddress]").setValue(address);
-        $("[id=react-select-3-input]").setValue(state).pressEnter();
-        $("[id=react-select-4-input]").setValue(city).pressEnter();
+        $("#uploadPicture").uploadFile(new File("src/test/resources/images.jpg"));
+        $("#currentAddress").setValue(address);
+        $("#react-select-3-input").setValue(state).pressEnter();
+        $("#react-select-4-input").setValue(city).pressEnter();
 
         $("#submit").click(); // Подтвердаем ввод данных
 
         // Проверяем результаты. Необходимо узнать как проверить соответствие заголовков и содержания строк в таблице
-        $("[class=table-responsive]").shouldHave(
+        $(".table-responsive").shouldHave(
                 text(firstName + " " + lastName),
                 text(email),
                 text(mobileNumber),
