@@ -46,6 +46,8 @@ public class SimpleTest {
         $(".react-datepicker__month-select").selectOption(birthMonth);
         $(".react-datepicker__month").$(byText(birthDay)).click();
         $("#subjectsInput").setValue("Economics").pressEnter();
+        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click();
+        $("#subjectsInput").setValue("Comp").pressEnter();
         $(".custom-checkbox").$(byText("Sports")).click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/images.jpg"));
         $("#currentAddress").setValue(address);
@@ -61,7 +63,7 @@ public class SimpleTest {
                 text(mobileNumber),
                 text("Female"),
                 text(birthDay + " " + birthMonth + "," + birthYear),
-                text("Economics"),
+                text("Computer Science"),
                 text("Sports"),
                 text("images.jpg"),
                 text(address),
