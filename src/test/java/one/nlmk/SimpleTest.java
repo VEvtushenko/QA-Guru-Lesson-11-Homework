@@ -36,6 +36,7 @@ public class SimpleTest {
         zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
 
         // Заполняем форму
+
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
@@ -46,7 +47,7 @@ public class SimpleTest {
         $(".react-datepicker__month-select").selectOption(birthMonth);
         $(".react-datepicker__month").$(byText(birthDay)).click();
         $("#subjectsInput").setValue("Economics").pressEnter();
-        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click();
+        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click(); // Проверяем очистку формы
         $("#subjectsInput").setValue("Comp").pressEnter();
         $(".custom-checkbox").$(byText("Sports")).click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/images.jpg"));
