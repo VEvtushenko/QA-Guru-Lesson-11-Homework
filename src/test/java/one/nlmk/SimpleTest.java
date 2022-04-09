@@ -20,6 +20,8 @@ public class SimpleTest {
 
     @Test
     void testPracticeFormForCorrectInput() {
+
+
         String  firstName = "Molly",
                 lastName = "Millions",
                 email = "molly@tibacity.com",
@@ -29,7 +31,9 @@ public class SimpleTest {
                 city = "Delhi",
                 birthYear = "1970",
                 birthMonth = "January",
-                birthDay = "15";
+                birthDay = "15",
+                gender = "Female",
+                imgFileName = "images.jpg";
 
 
         open("/automation-practice-form");
@@ -40,34 +44,49 @@ public class SimpleTest {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
-        $("#genterWrapper").$(byText("Female")).click();
+        $("#genterWrapper").$(byText(gender)).click();
         $("#userNumber").setValue(mobileNumber);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption(birthYear);
         $(".react-datepicker__month-select").selectOption(birthMonth);
         $(".react-datepicker__month").$(byText(birthDay)).click();
-        $("#subjectsInput").setValue("Economics").pressEnter();
-        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click(); // Проверяем очистку формы
-        $("#subjectsInput").setValue("Comp").pressEnter();
+        $("#subjectsInput").setValue("Economics").pressEnter();                  // Вводим предмет
+        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click(); // Передумали, очистили форму
+        $("#subjectsInput").setValue("Comp").pressEnter();                       // Вводим новый предмет, проверяем как работает автодополнение
         $(".custom-checkbox").$(byText("Sports")).click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/images.jpg"));
+        $("#uploadPicture").uploadFile(new File("src/test/resources/" + imgFileName));
         $("#currentAddress").setValue(address);
-        $("#react-select-3-input").setValue(state).pressEnter();
-        $("#react-select-4-input").setValue(city).pressEnter();
+        $("#stateCity-wrapper").$(byText("Select State")).click();
+        $("#stateCity-wrapper").$(byText(state)).click();
+        $("#stateCity-wrapper").$(byText("Select City")).click();
+        $("#stateCity-wrapper").$(byText(city)).click();
+//        $("#react-select-3-input").setValue(state).pressEnter();
+//        $("#react-select-4-input").setValue(city).pressEnter();
 
         $("#submit").click(); // Подтвердаем ввод данных
 
-        // Проверяем результаты. Необходимо узнать как проверить соответствие заголовков и содержания строк в таблице
-        $(".table-responsive").shouldHave(
-                text(firstName + " " + lastName),
-                text(email),
-                text(mobileNumber),
-                text("Female"),
-                text(birthDay + " " + birthMonth + "," + birthYear),
-                text("Computer Science"),
-                text("Sports"),
-                text("images.jpg"),
-                text(address),
-                text(state + " " + city));
+        // Проверяем результаты.
+        $(".table-responsive").$(byText("Student Name")).parent()
+                .shouldHave(text(firstName + " " + lastName));
+        $(".table-responsive").$(byText("Student Email")).parent()
+                .shouldHave(text(email));
+        $(".table-responsive").$(byText("Mobile")).parent()
+                .shouldHave(text(mobileNumber));
+        $(".table-responsive").$(byText("Gender")).parent()
+                .shouldHave(text(gender));
+        $(".table-responsive").$(byText("Date of Birth")).parent()
+                .shouldHave(text(birthDay + " " + birthMonth + "," + birthYear));
+        $(".table-responsive").$(byText("Subjects")).parent()
+                .shouldNotHave(text("Economics"));                                        // Проверяем, что строка 55 сработала и выбранный первым предмет удалилс
+        $(".table-responsive").$(byText("Subjects")).parent()
+                .shouldHave(text("Computer Science"));
+        $(".table-responsive").$(byText("Hobbies")).parent()
+                .shouldHave(text("Sports"));
+        $(".table-responsive").$(byText("Picture")).parent()
+                .shouldHave(text(imgFileName));
+        $(".table-responsive").$(byText("Address")).parent()
+                .shouldHave(text(address));
+        $(".table-responsive").$(byText("State and City")).parent()
+                .shouldHave(text(state + " " + city));
     }
 }
