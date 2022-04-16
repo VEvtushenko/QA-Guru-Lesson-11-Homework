@@ -18,6 +18,7 @@ public class RegistrationFormTest {
         Configuration.baseUrl = "https://demoqa.com";
     }
 
+
     @Test
     void testPracticeFormForCorrectInput() {
 
