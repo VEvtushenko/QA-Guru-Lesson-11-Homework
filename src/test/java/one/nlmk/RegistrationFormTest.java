@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class SimpleTest {
+public class RegistrationFormTest {
 
     @BeforeAll
     static void setUp() {
@@ -32,9 +32,10 @@ public class SimpleTest {
                 birthYear = "1970",
                 birthMonth = "January",
                 birthDay = "15",
-                gender = "Female",
                 imgFileName = "images.jpg";
 
+        String[] hobbie = new String[] {"Sports", "Reading", "Music"};
+        String[] gender = new String[] {"Male", "Female", "Other"};
 
         open("/automation-practice-form");
         zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
@@ -44,7 +45,7 @@ public class SimpleTest {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
-        $("#genterWrapper").$(byText(gender)).click();
+        $("#genterWrapper").$(byText(gender[1])).click();
         $("#userNumber").setValue(mobileNumber);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption(birthYear);
@@ -53,7 +54,7 @@ public class SimpleTest {
         $("#subjectsInput").setValue("Economics").pressEnter();                  // Вводим предмет
         $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click(); // Передумали, очистили форму
         $("#subjectsInput").setValue("Comp").pressEnter();                       // Вводим новый предмет, проверяем как работает автодополнение
-        $(".custom-checkbox").$(byText("Sports")).click();
+        $(".custom-checkbox").$(byText(hobbie[0])).click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/" + imgFileName));
         $("#currentAddress").setValue(address);
         $("#stateCity-wrapper").$(byText("Select State")).click();
@@ -73,7 +74,7 @@ public class SimpleTest {
         $(".table-responsive").$(byText("Mobile")).parent()
                 .shouldHave(text(mobileNumber));
         $(".table-responsive").$(byText("Gender")).parent()
-                .shouldHave(text(gender));
+                .shouldHave(text(gender[1]));
         $(".table-responsive").$(byText("Date of Birth")).parent()
                 .shouldHave(text(birthDay + " " + birthMonth + "," + birthYear));
         $(".table-responsive").$(byText("Subjects")).parent()
@@ -81,7 +82,7 @@ public class SimpleTest {
         $(".table-responsive").$(byText("Subjects")).parent()
                 .shouldHave(text("Computer Science"));
         $(".table-responsive").$(byText("Hobbies")).parent()
-                .shouldHave(text("Sports"));
+                .shouldHave(text(hobbie[0]));
         $(".table-responsive").$(byText("Picture")).parent()
                 .shouldHave(text(imgFileName));
         $(".table-responsive").$(byText("Address")).parent()
