@@ -1,4 +1,4 @@
-package one.nlmk;
+package tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +9,7 @@ import java.io.File;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static java.lang.String.format;
 
 public class RegistrationFormTest {
 
@@ -17,7 +18,6 @@ public class RegistrationFormTest {
         Configuration.holdBrowserOpen = true;
         Configuration.baseUrl = "https://demoqa.com";
     }
-
 
     @Test
     void testPracticeFormForCorrectInput() {
@@ -34,6 +34,10 @@ public class RegistrationFormTest {
                 birthMonth = "January",
                 birthDay = "15",
                 imgFileName = "images.jpg";
+
+        String  expectedFullName = format("%s %s", firstName, lastName),
+                expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
+                expectedStateAndCity = format("%s %s", state, city);
 
         String[] hobbie = new String[] {"Sports", "Reading", "Music"};
         String[] gender = new String[] {"Male", "Female", "Other"};
@@ -69,7 +73,7 @@ public class RegistrationFormTest {
 
         // Проверяем результаты.
         $(".table-responsive").$(byText("Student Name")).parent()
-                .shouldHave(text(firstName + " " + lastName));
+                .shouldHave(text(expectedFullName));
         $(".table-responsive").$(byText("Student Email")).parent()
                 .shouldHave(text(email));
         $(".table-responsive").$(byText("Mobile")).parent()
@@ -77,7 +81,7 @@ public class RegistrationFormTest {
         $(".table-responsive").$(byText("Gender")).parent()
                 .shouldHave(text(gender[1]));
         $(".table-responsive").$(byText("Date of Birth")).parent()
-                .shouldHave(text(birthDay + " " + birthMonth + "," + birthYear));
+                .shouldHave(text(expectedDateOfBirth));
         $(".table-responsive").$(byText("Subjects")).parent()
                 .shouldNotHave(text("Economics"));                                        // Проверяем, что строка 55 сработала и выбранный первым предмет удалилс
         $(".table-responsive").$(byText("Subjects")).parent()
@@ -89,6 +93,6 @@ public class RegistrationFormTest {
         $(".table-responsive").$(byText("Address")).parent()
                 .shouldHave(text(address));
         $(".table-responsive").$(byText("State and City")).parent()
-                .shouldHave(text(state + " " + city));
+                .shouldHave(text(expectedStateAndCity));
     }
 }
