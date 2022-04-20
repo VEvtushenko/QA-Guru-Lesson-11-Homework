@@ -1,15 +1,20 @@
-package tests;
+package one.nlmk.tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
+import com.github.javafaker.Faker;
+import static one.nlmk.utils.RandomString.getRandomPhone;
+import static one.nlmk.utils.RandomString.getRandomMonth;
+
 
 public class RegistrationFormTest {
 
@@ -22,17 +27,18 @@ public class RegistrationFormTest {
     @Test
     void testPracticeFormForCorrectInput() {
 
-
-        String  firstName = "Molly",
-                lastName = "Millions",
-                email = "molly@tibacity.com",
-                mobileNumber = "9052128506",
-                address = "Main street",
+        Faker faker = new Faker(new Locale("EN", "IND"));
+        String  firstName = faker.name().firstName(),
+                lastName = faker.name().lastName(),
+                email = faker.internet().emailAddress(),
+                mobileNumber =  getRandomPhone(),
+                address = faker.address().fullAddress(),
                 state = "NCR",
                 city = "Delhi",
-                birthYear = "1970",
-                birthMonth = "January",
-                birthDay = "15",
+                birthDate = String.valueOf(faker.date().birthday(18, 100)),
+                birthYear = birthDate.substring(birthDate.length() - 4),
+                birthMonth = getRandomMonth(faker.date().birthday().getMonth()),
+                birthDay = String.valueOf((faker.date().birthday().getDay())),
                 imgFileName = "images.jpg";
 
         String  expectedFullName = format("%s %s", firstName, lastName),
