@@ -2,10 +2,7 @@ package one.nlmk.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import one.nlmk.pages.components.CalendarComponent;
-
 import java.io.File;
-import java.util.Calendar;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -13,10 +10,20 @@ import static com.codeborne.selenide.Selenide.*;
 public class RegistrationFormPage {
 
     CalendarComponent calendar = new CalendarComponent();
-    // locators
-    SelenideElement firstNameLocator = $("#firstName");
 
-    // actions
+    SelenideElement firstNameLocator = $("#firstName"),
+                    lastNameLocator = $("#lastName"),
+                    emeilLocator = $("#userEmail"),
+                    genderLocator = $("#genterWrapper"),
+                    phoneNumberLocator = $("#userNumber"),
+                    calendarMainLocator = $("#dateOfBirthInput"),
+                    subjectLocator = $("#subjectsInput"),
+                    checkboxHobbiesLocator = $(".custom-checkbox"),
+                    adressLocator = $("#currentAddress"),
+                    stateAndCityLocator = $("#stateCity-wrapper"),
+                    imgUploadLocator = $("#uploadPicture"),
+                    resultsTable = $(".table-responsive");
+
     public RegistrationFormPage openPage() {
         open("/automation-practice-form");
         zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
@@ -29,33 +36,33 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage setLastName(String value) {
-        $("#lastName").setValue(value);
+        lastNameLocator.setValue(value);
         return this;
     }
 
     public RegistrationFormPage setEmail(String value) {
-        $("#userEmail").setValue(value);
+        emeilLocator.setValue(value);
         return this;
     }
 
     public RegistrationFormPage setGender(String value) {
-        $("#genterWrapper").$(byText(value)).click();
+        genderLocator.$(byText(value)).click();
         return this;
     }
 
     public RegistrationFormPage setPhoneNumber(String value) {
-        $("#userNumber").setValue(value);
+        phoneNumberLocator.setValue(value);
         return this;
     }
 
     public RegistrationFormPage setBirthday(String year, String month, String day) {
-        $("#dateOfBirthInput").click();
+        calendarMainLocator.click();
         calendar.setDate(year, month, day);
         return this;
     }
 
     public RegistrationFormPage setSubject(String value) {
-        $("#subjectsInput").setValue(value).pressEnter();
+        subjectLocator.setValue(value).pressEnter();
         return this;
     }
 
@@ -65,29 +72,29 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage setHobbie(String value) {
-        $(".custom-checkbox").$(byText(value)).click();
+        checkboxHobbiesLocator.$(byText(value)).click();
         return this;
     }
 
     public RegistrationFormPage setAddress(String value) {
-        $("#currentAddress").setValue(value);
+        adressLocator.setValue(value);
         return this;
     }
 
     public RegistrationFormPage seleclState(String value) {
-        $("#stateCity-wrapper").$(byText("Select State")).click();
-        $("#stateCity-wrapper").$(byText(value)).click();
+        stateAndCityLocator.$(byText("Select State")).click();
+        stateAndCityLocator.$(byText(value)).click();
         return this;
     }
 
     public RegistrationFormPage seleclCity(String value) {
-        $("#stateCity-wrapper").$(byText("Select City")).click();
-        $("#stateCity-wrapper").$(byText(value)).click();
+        stateAndCityLocator.$(byText("Select City")).click();
+        stateAndCityLocator.$(byText(value)).click();
         return this;
     }
 
     public RegistrationFormPage uploadFile(String value) {
-        $("#uploadPicture").uploadFile(new File("src/test/resources/" + value));
+        imgUploadLocator.uploadFile(new File("src/test/resources/" + value));
         return this;
     }
 
@@ -97,14 +104,13 @@ public class RegistrationFormPage {
 
     public RegistrationFormPage checkResults(String key, String value, boolean isPositiveCheck) {
         if (isPositiveCheck) {
-            $(".table-responsive").$(byText(key)).parent()
+            resultsTable.$(byText(key)).parent()
                     .shouldHave(text(value));
         }
         else {
-            $(".table-responsive").$(byText(key)).parent()
+            resultsTable.$(byText(key)).parent()
                     .shouldNotHave(text(value));
         }
         return this;
     }
-
 }

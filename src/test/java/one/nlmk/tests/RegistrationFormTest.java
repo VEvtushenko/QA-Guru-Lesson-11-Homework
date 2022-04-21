@@ -4,14 +4,8 @@ import com.codeborne.selenide.Configuration;
 import one.nlmk.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 import java.util.Date;
 import java.util.Locale;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 import com.github.javafaker.Faker;
 import static one.nlmk.utils.RandomString.getRandomPhone;
@@ -42,7 +36,6 @@ public class RegistrationFormTest {
                                         "Agra", "Lucknow", "Merrut",
                                         "Karnal", "Panipat",
                                         "Jaipur", "Jaiselmer"};
-
         String  firstName = faker.name().firstName(),
                 lastName = faker.name().lastName(),
                 email = faker.internet().emailAddress(),
@@ -75,8 +68,6 @@ public class RegistrationFormTest {
                 .seleclState(states[0])
                 .seleclCity(cities[1])
                 .submit();
-
-
 
         // Проверяем результаты.
         registrationFormPage.checkResults("Student Name", expectedFullName, true)
