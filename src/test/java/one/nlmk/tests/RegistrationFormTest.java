@@ -1,6 +1,8 @@
 package one.nlmk.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import one.nlmk.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import static java.lang.String.format;
 import com.github.javafaker.Faker;
 import static one.nlmk.utils.RandomString.getRandomPhone;
 import static one.nlmk.utils.RandomString.getRandomMonth;
+
 
 
 public class RegistrationFormTest {
@@ -24,6 +27,8 @@ public class RegistrationFormTest {
 
     @Test
     void testPracticeFormForCorrectInput() {
+
+        SelenideLogger.addListener("allure", new AllureSelenide());
 
         Faker faker = new Faker(new Locale("EN", "IND"));
         Date birthDate = faker.date().birthday(18, 100);
@@ -45,7 +50,7 @@ public class RegistrationFormTest {
                 birthYear = stringBirthDate.substring(stringBirthDate.length() - 4),
                 birthMonth = getRandomMonth(birthDate.getMonth()),
                 birthDay = String.valueOf(birthDate.getDay()),
-                imgFileName = "images.jpg",
+                imgFileName = "Images/images.jpg",
 
                 expectedFullName = format("%s %s", firstName, lastName),
                 expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
