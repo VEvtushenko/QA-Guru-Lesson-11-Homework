@@ -3,12 +3,14 @@ package demo.qa.pages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import demo.qa.pages.components.CalendarComponent;
+
 import java.io.File;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class RegistrationFormPage {
+public class RegistrationFormPage  {
 
     CalendarComponent calendar = new CalendarComponent();
 
@@ -23,13 +25,13 @@ public class RegistrationFormPage {
                     addressLocator = $("#currentAddress"),
                     stateAndCityLocator = $("#stateCity-wrapper"),
                     imgUploadLocator = $("#uploadPicture"),
-                    windowWithResults = $(".modal-content"),
-                    resultsTable = $(".table-responsive");
+                    windowWithResults = $(".modal-content");
 
     @Step("Открываем страницу")
     public RegistrationFormPage openPage() {
         open("/automation-practice-form");
-        zoom(0.75);     // Уменьшаем масштаб, так как плашка внизу страницы закрывает кнопку отправки формы
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
         return this;
     }
 
@@ -128,13 +130,18 @@ public class RegistrationFormPage {
     @Step("Проверяем правильность ввода: {key}")
     public RegistrationFormPage checkResults(String key, String value, boolean isPositiveCheck) {
         if (isPositiveCheck) {
-            resultsTable.$(byText(key)).parent()
+            windowWithResults.$(byText(key)).parent()
                     .shouldHave(text(value));
         }
         else {
-            resultsTable.$(byText(key)).parent()
+            windowWithResults.$(byText(key)).parent()
                     .shouldNotHave(text(value));
         }
         return this;
+    }
+
+    public void closeResultTable() {
+        $("#closeLargeModal").click();
+        windowWithResults.shouldNotBe(visible);
     }
 }

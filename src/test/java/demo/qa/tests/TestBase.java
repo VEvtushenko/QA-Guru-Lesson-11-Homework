@@ -2,7 +2,9 @@ package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
+import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Date;
@@ -25,7 +27,6 @@ public class TestBase {
     Faker faker = new Faker(new Locale("EN", "IND"));
     Date birthDate = faker.date().birthday(18, 100);
     java.io.File imgStudent = new java.io.File("src/test/resources/Images/images.jpg");
-
     String[] hobbie = new String[] {"Sports", "Reading", "Music"};
     String[] gender = new String[] {"Male", "Female", "Other"};
     String[] subjects = new String[] {"Economics", "Arts", "Computer Science", "Math"};

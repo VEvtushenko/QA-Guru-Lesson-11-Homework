@@ -1,6 +1,7 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import demo.qa.helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -29,8 +30,17 @@ public class RegistrationFormTest extends TestBase {
                 .uploadFile(imgStudent)
                 .setAddress(address)
                 .seleclState(states[0])
-                .seleclCity(cities[1])
-                .submit();
+                .seleclCity(cities[1]);
+
+        Attach.attachScreenshot(" после ввода данных");
+        Attach.browserConsoleLogs();
+        Attach.pageSource();
+
+        registrationFormPage.submit();
+
+        Attach.attachScreenshot(" после подтверждения ввода данных");
+        Attach.browserConsoleLogs();
+        Attach.pageSource();
 
         registrationFormPage.checkWindowWithResults()
                 .checkResults("Student Name", expectedFullName, true)
@@ -43,6 +53,11 @@ public class RegistrationFormTest extends TestBase {
                 .checkResults("Hobbies", hobbie[0], true)
                 .checkResults("Picture", imgStudent.getName(), true)
                 .checkResults("Address", address, true)
-                .checkResults("State and City", expectedStateAndCity, true);
+                .checkResults("State and City", expectedStateAndCity, true)
+                .closeResultTable();
+
+        Attach.attachScreenshot("Скриншот итоговой страницы");
+        Attach.browserConsoleLogs();
+        Attach.pageSource();
     }
 }
