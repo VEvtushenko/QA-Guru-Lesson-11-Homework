@@ -5,13 +5,14 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import one.nlmk.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
 import java.util.Locale;
 import static java.lang.String.format;
 import com.github.javafaker.Faker;
-import static one.nlmk.utils.RandomString.getRandomPhone;
-import static one.nlmk.utils.RandomString.getRandomMonth;
+import static one.nlmk.utils.RandomUtils.getRandomPhone;
+import static one.nlmk.utils.RandomUtils.getRandomMonth;
 
 
 
@@ -21,10 +22,10 @@ public class RegistrationFormTest {
 
     @BeforeAll
     static void setUp() {
-        Configuration.holdBrowserOpen = true;
         Configuration.baseUrl = "https://demoqa.com";
     }
 
+    @DisplayName("Проверка заполнения регистрационной формы обучающегося")
     @Test
     void testPracticeFormForCorrectInput() {
 
@@ -50,11 +51,12 @@ public class RegistrationFormTest {
                 birthYear = stringBirthDate.substring(stringBirthDate.length() - 4),
                 birthMonth = getRandomMonth(birthDate.getMonth()),
                 birthDay = String.valueOf(birthDate.getDay()),
-                imgFileName = "Images/images.jpg",
 
                 expectedFullName = format("%s %s", firstName, lastName),
                 expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
                 expectedStateAndCity = format("%s %s", states[0], cities[1]);
+
+        java.io.File imgStudent = new java.io.File("src/test/resources/Images/images.jpg");
 
         // Вводим данные
         registrationFormPage.openPage()
@@ -68,14 +70,15 @@ public class RegistrationFormTest {
                 .clearSubject()
                 .setSubject(subjects[2].substring(2, 4))
                 .setHobbie(hobbie[0])
-                .uploadFile(imgFileName)
+                .uploadFile(imgStudent)
                 .setAddress(address)
                 .seleclState(states[0])
                 .seleclCity(cities[1])
                 .submit();
 
         // Проверяем результаты.
-        registrationFormPage.checkResults("Student Name", expectedFullName, true)
+        registrationFormPage.checkWindowWithResults()
+                .checkResults("Student Name", expectedFullName, true)
                 .checkResults("Student Email", email, true)
                 .checkResults("Mobile", mobileNumber, true)
                 .checkResults("Gender", gender[1], true)
@@ -83,7 +86,7 @@ public class RegistrationFormTest {
                 .checkResults("Subjects", subjects[0], false)
                 .checkResults("Subjects", subjects[2], true)
                 .checkResults("Hobbies", hobbie[0], true)
-                .checkResults("Picture", imgFileName, true)
+                .checkResults("Picture", imgStudent.getName(), true)
                 .checkResults("Address", address, true)
                 .checkResults("State and City", expectedStateAndCity, true);
 

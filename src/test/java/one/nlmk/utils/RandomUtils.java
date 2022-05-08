@@ -2,7 +2,7 @@ package one.nlmk.utils;
 
 import java.util.Random;
 
-public class RandomString {
+public class RandomUtils {
     public static String getRandomPhone () {
         Random r = new Random();
         String strResult = "9";
@@ -21,7 +21,7 @@ public class RandomString {
                 "April",
                 "May",
                 "June",
-                "Julie",
+                "July",
                 "August",
                 "September",
                 "October",

@@ -23,6 +23,7 @@ public class RegistrationFormPage {
                     addressLocator = $("#currentAddress"),
                     stateAndCityLocator = $("#stateCity-wrapper"),
                     imgUploadLocator = $("#uploadPicture"),
+                    windowWithResults = $(".modal-content"),
                     resultsTable = $(".table-responsive");
 
     @Step("Открываем страницу")
@@ -108,8 +109,8 @@ public class RegistrationFormPage {
     }
 
     @Step("Загружаем фото")
-    public RegistrationFormPage uploadFile(String value) {
-        imgUploadLocator.uploadFile(new File("src/test/resources/" + value));
+    public RegistrationFormPage uploadFile(File value) {
+        imgUploadLocator.uploadFile(value);
         return this;
     }
 
@@ -118,7 +119,13 @@ public class RegistrationFormPage {
         $("#submit").click();
     }
 
-    @Step("Проверяем правильность ввода {key}")
+    @Step
+    public RegistrationFormPage checkWindowWithResults() {
+        windowWithResults.shouldHave(text("Thanks for submitting the form"));
+        return this;
+    }
+
+    @Step("Проверяем правильность ввода: {key}")
     public RegistrationFormPage checkResults(String key, String value, boolean isPositiveCheck) {
         if (isPositiveCheck) {
             resultsTable.$(byText(key)).parent()
