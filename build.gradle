@@ -48,3 +48,9 @@ tasks.withType(Test) {
         }
     }
 }
+
+task registrationFormTest(type: Test) {
+    useJUnitPlatform{
+        includeTags "RegistrationFormTest"
+    }
+}
