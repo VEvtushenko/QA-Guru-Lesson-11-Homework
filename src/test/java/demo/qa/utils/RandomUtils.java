@@ -1,4 +1,4 @@
-package one.nlmk.utils;
+package demo.qa.utils;
 
 import java.util.Random;
 

@@ -1,8 +1,8 @@
-package one.nlmk.pages;
+package demo.qa.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import one.nlmk.pages.components.CalendarComponent;
+import demo.qa.pages.components.CalendarComponent;
 import java.io.File;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;

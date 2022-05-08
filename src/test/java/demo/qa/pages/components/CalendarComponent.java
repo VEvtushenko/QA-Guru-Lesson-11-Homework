@@ -1,4 +1,4 @@
-package one.nlmk.pages.components;
+package demo.qa.pages.components;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;

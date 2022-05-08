@@ -1,9 +1,9 @@
-package one.nlmk.tests;
+package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import one.nlmk.pages.RegistrationFormPage;
+import demo.qa.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 import static java.lang.String.format;
 import com.github.javafaker.Faker;
-import static one.nlmk.utils.RandomUtils.getRandomPhone;
-import static one.nlmk.utils.RandomUtils.getRandomMonth;
+import static demo.qa.utils.RandomUtils.getRandomPhone;
+import static demo.qa.utils.RandomUtils.getRandomMonth;
 
 
 
