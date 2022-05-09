@@ -21,6 +21,7 @@ public class RegistrationFormPage  {
                     phoneNumberLocator = $("#userNumber"),
                     calendarMainLocator = $("#dateOfBirthInput"),
                     subjectLocator = $("#subjectsInput"),
+                    clearSubjectsButton = $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r"),
                     checkboxHobbiesLocator = $(".custom-checkbox"),
                     addressLocator = $("#currentAddress"),
                     stateAndCityLocator = $("#stateCity-wrapper"),
@@ -80,7 +81,7 @@ public class RegistrationFormPage  {
 
     @Step("Очищаем выбранные предметы")
     public RegistrationFormPage clearSubject() {
-        $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r").click(); // Передумали, очистили форму
+        clearSubjectsButton.click();
         return this;
     }
 
@@ -121,7 +122,7 @@ public class RegistrationFormPage  {
         $("#submit").click();
     }
 
-    @Step
+    @Step("Проверяем, что открылась таблица с введёнными данными")
     public RegistrationFormPage checkWindowWithResults() {
         windowWithResults.shouldHave(text("Thanks for submitting the form"));
         return this;
@@ -140,6 +141,7 @@ public class RegistrationFormPage  {
         return this;
     }
 
+    @Step("Закрываем таблицу с результатами и проверяем, что она закрылась")
     public void closeResultTable() {
         $("#closeLargeModal").click();
         windowWithResults.shouldNotBe(visible);

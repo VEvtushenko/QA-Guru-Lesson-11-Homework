@@ -32,15 +32,11 @@ public class RegistrationFormTest extends TestBase {
                 .seleclState(states[0])
                 .seleclCity(cities[1]);
 
-        Attach.attachScreenshot(" после ввода данных");
-        Attach.browserConsoleLogs();
-        Attach.pageSource();
+        TestBase.getAttachments(" после ввода данных");
 
         registrationFormPage.submit();
 
-        Attach.attachScreenshot(" после подтверждения ввода данных");
-        Attach.browserConsoleLogs();
-        Attach.pageSource();
+        TestBase.getAttachments(" после подтверждения ввода данных");
 
         registrationFormPage.checkWindowWithResults()
                 .checkResults("Student Name", expectedFullName, true)
@@ -56,8 +52,6 @@ public class RegistrationFormTest extends TestBase {
                 .checkResults("State and City", expectedStateAndCity, true)
                 .closeResultTable();
 
-        Attach.attachScreenshot("Скриншот итоговой страницы");
-        Attach.browserConsoleLogs();
-        Attach.pageSource();
+        TestBase.getAttachments(" итоговой страницы");
     }
 }

@@ -4,8 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Date;
 import java.util.Locale;
@@ -20,6 +20,11 @@ public class TestBase {
     static void setUp() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVide", true);
+        Configuration.browserCapabilities = capabilities;
     }
 
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
@@ -32,9 +37,9 @@ public class TestBase {
     String[] subjects = new String[] {"Economics", "Arts", "Computer Science", "Math"};
     String[] states = new String[] {"NCR", "Uttar Pradesh", "Haryana", "Rajastan"};
     String[] cities = new String[] {"Delhi", "Gurgaon", "Nodia",
-            "Agra", "Lucknow", "Merrut",
-            "Karnal", "Panipat",
-            "Jaipur", "Jaiselmer"};
+                                    "Agra", "Lucknow", "Merrut",
+                                    "Karnal", "Panipat",
+                                    "Jaipur", "Jaiselmer"};
 
     String  firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
@@ -45,8 +50,14 @@ public class TestBase {
             birthYear = stringBirthDate.substring(stringBirthDate.length() - 4),
             birthMonth = getRandomMonth(birthDate.getMonth()),
             birthDay = String.valueOf(birthDate.getDay()),
-
             expectedFullName = format("%s %s", firstName, lastName),
             expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
             expectedStateAndCity = format("%s %s", states[0], cities[1]);
+
+    public static void getAttachments(String screenshotName) {
+        Attach.attachScreenshot(screenshotName);
+        Attach.browserConsoleLogs();
+        Attach.pageSource();
+        Attach.addVideo();
+    }
 }
