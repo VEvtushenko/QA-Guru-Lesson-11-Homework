@@ -1,9 +1,11 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -23,7 +25,7 @@ public class TestBase {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVide", true);
+        capabilities.setCapability("enableVideo", true);
         Configuration.browserCapabilities = capabilities;
     }
 
@@ -49,15 +51,19 @@ public class TestBase {
             stringBirthDate = String.valueOf(birthDate),
             birthYear = stringBirthDate.substring(stringBirthDate.length() - 4),
             birthMonth = getRandomMonth(birthDate.getMonth()),
-            birthDay = String.valueOf(birthDate.getDay()),
+            birthDay = String.valueOf(birthDate.getDate()),
             expectedFullName = format("%s %s", firstName, lastName),
             expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
             expectedStateAndCity = format("%s %s", states[0], cities[1]);
 
-    public static void getAttachments(String screenshotName) {
+    public static void getScreenAndPage(String screenshotName) {
         Attach.attachScreenshot(screenshotName);
-        Attach.browserConsoleLogs();
         Attach.pageSource();
+    }
+
+    @AfterEach
+    public void getVideoAndLog() {
         Attach.addVideo();
+        Attach.browserConsoleLogs();
     }
 }

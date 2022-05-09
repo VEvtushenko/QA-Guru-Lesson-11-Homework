@@ -1,7 +1,7 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import demo.qa.helpers.Attach;
+import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -10,8 +10,12 @@ import org.junit.jupiter.api.Test;
 @Tag("RegistrationFormTest")
 public class RegistrationFormTest extends TestBase {
 
-    @DisplayName("Проверка заполнения регистрационной формы обучающегося")
     @Test
+    @Owner("Vladimir Evtushenko")
+    @Severity(SeverityLevel.NORMAL)
+    @Feature("DemoQA")
+    @Link(value = "QA Guru, Lesson 10, Homework", url = "https://github.com/VEvtushenko/QA-Guru-Lesson-10-Homework")
+    @DisplayName("Проверка заполнения регистрационной формы обучающегося")
     void testPracticeFormForCorrectInput() {
 
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -32,11 +36,11 @@ public class RegistrationFormTest extends TestBase {
                 .seleclState(states[0])
                 .seleclCity(cities[1]);
 
-        TestBase.getAttachments(" после ввода данных");
+        TestBase.getScreenAndPage(" после ввода данных");
 
         registrationFormPage.submit();
 
-        TestBase.getAttachments(" после подтверждения ввода данных");
+        TestBase.getScreenAndPage(" после подтверждения ввода данных");
 
         registrationFormPage.checkWindowWithResults()
                 .checkResults("Student Name", expectedFullName, true)
@@ -52,6 +56,6 @@ public class RegistrationFormTest extends TestBase {
                 .checkResults("State and City", expectedStateAndCity, true)
                 .closeResultTable();
 
-        TestBase.getAttachments(" итоговой страницы");
+        TestBase.getScreenAndPage(" итоговой страницы");
     }
 }
