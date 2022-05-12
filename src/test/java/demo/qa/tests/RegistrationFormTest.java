@@ -24,8 +24,6 @@ public class RegistrationFormTest extends TestBase {
 
         SelenideLogger.addListener("allure", new AllureSelenide());
 
-//        System.out.println(urlTestedSite);
-
         registrationFormPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)

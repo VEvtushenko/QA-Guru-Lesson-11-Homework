@@ -18,8 +18,8 @@ import static java.lang.String.format;
 public class TestBase {
 
     static RemoteHubConfig remoteHubConfig = ConfigFactory.create(RemoteHubConfig.class);
-//    static String urlTestedSite = SystemProperties.testedSite;
-//    static String urlRemoteHub = SystemProperties.remoteHub;
+    static String urlTestedSite = SystemProperties.testedSite;
+    static String urlRemoteHub = SystemProperties.remoteHub;
     static String password = remoteHubConfig.password();
     static String login = remoteHubConfig.login();
 
@@ -50,11 +50,8 @@ public class TestBase {
 
     @BeforeAll
      public static void setUp() {
-        String remoteHub = System.getProperty("remoteHub");
-        String testedSite = System.getProperty("testedSite");
-
-        Configuration.baseUrl = remoteHub;
-        Configuration.remote = "https://" + login + ":" + password + "@" + testedSite;
+        Configuration.baseUrl = urlTestedSite;
+        Configuration.remote = "https://" + login + ":" + password + "@" + urlRemoteHub;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
