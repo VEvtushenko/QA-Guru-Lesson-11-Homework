@@ -1,11 +1,15 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import demo.qa.data.TestData;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static demo.qa.data.TestData.cities;
+import static demo.qa.data.TestData.states;
 
 @Tag("RegistrationFormTest")
 public class RegistrationFormTest extends TestBase {
@@ -14,7 +18,7 @@ public class RegistrationFormTest extends TestBase {
     @Owner("Vladimir Evtushenko")
     @Severity(SeverityLevel.NORMAL)
     @Feature("DemoQA")
-    @Link(value = "QA Guru, Lesson 10, Homework", url = "https://github.com/VEvtushenko/QA-Guru-Lesson-10-Homework")
+    @Link(value = "QA Guru, Lesson 11, Homework", url = "https://github.com/VEvtushenko/QA-Guru-Lesson-11-Homework")
     @DisplayName("Проверка заполнения регистрационной формы обучающегося")
     void testPracticeFormForCorrectInput() {
 
@@ -24,13 +28,13 @@ public class RegistrationFormTest extends TestBase {
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
-                .setGender(gender[1])
+                .setGender(gender)
                 .setPhoneNumber(mobileNumber)
                 .setBirthday(birthYear, birthMonth, birthDay)
-                .setSubject(subjects[0])
+                .setSubject(subjectDrop)
                 .clearSubject()
-                .setSubject(subjects[2].substring(2, 4))
-                .setHobbie(hobbie[0])
+                .setSubject(subjectTrue.substring(2, 4))
+                .setHobbie(hobbie)
                 .uploadFile(imgStudent)
                 .setAddress(address)
                 .seleclState(states[0])
@@ -46,11 +50,11 @@ public class RegistrationFormTest extends TestBase {
                 .checkResults("Student Name", expectedFullName, true)
                 .checkResults("Student Email", email, true)
                 .checkResults("Mobile", mobileNumber, true)
-                .checkResults("Gender", gender[1], true)
+                .checkResults("Gender", gender, true)
                 .checkResults("Date of Birth", expectedDateOfBirth, true)
-                .checkResults("Subjects", subjects[0], false)
-                .checkResults("Subjects", subjects[2], true)
-                .checkResults("Hobbies", hobbie[0], true)
+                .checkResults("Subjects", subjectDrop, false)
+                .checkResults("Subjects", subjectTrue, true)
+                .checkResults("Hobbies", hobbie, true)
                 .checkResults("Picture", imgStudent.getName(), true)
                 .checkResults("Address", address, true)
                 .checkResults("State and City", expectedStateAndCity, true)

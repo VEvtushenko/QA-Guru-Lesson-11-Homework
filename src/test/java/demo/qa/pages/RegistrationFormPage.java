@@ -22,7 +22,7 @@ public class RegistrationFormPage  {
                     calendarMainLocator = $("#dateOfBirthInput"),
                     subjectLocator = $("#subjectsInput"),
                     clearSubjectsButton = $(".subjects-auto-complete__clear-indicator").$(".css-19bqh2r"),
-                    checkboxHobbiesLocator = $(".custom-checkbox"),
+                    checkboxHobbiesLocator = $("#hobbiesWrapper"),
                     addressLocator = $("#currentAddress"),
                     stateAndCityLocator = $("#stateCity-wrapper"),
                     imgUploadLocator = $("#uploadPicture"),
@@ -30,7 +30,7 @@ public class RegistrationFormPage  {
 
     @Step("Открываем страницу")
     public RegistrationFormPage openPage() {
-        open("/automation-practice-form");
+        open("automation-practice-form");
         executeJavaScript("$('footer').remove()");
         executeJavaScript("$('#fixedban').remove()");
         return this;

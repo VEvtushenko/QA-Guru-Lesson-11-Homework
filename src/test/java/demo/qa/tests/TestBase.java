@@ -1,51 +1,48 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.github.javafaker.Faker;
+import demo.qa.config.RemoteHubConfig;
+import demo.qa.data.TestData;
 import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
+import io.qameta.allure.Step;
+import org.aeonbits.owner.ConfigFactory;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static demo.qa.utils.RandomUtils.getRandomPhone;
 import static java.lang.String.format;
 
 public class TestBase {
 
-    RegistrationFormPage registrationFormPage = new RegistrationFormPage();
+    static RemoteHubConfig remoteHubConfig = ConfigFactory.create(RemoteHubConfig.class);
+    static String urlTestedSite = remoteHubConfig.urlTestedSite();
+    static String urlRemoteHub = remoteHubConfig.urlRemoteHub();
+    static String password = remoteHubConfig.password();
+    static String login = remoteHubConfig.login();
 
-    Faker faker = new Faker(new Locale("EN", "IND"));
+    RegistrationFormPage registrationFormPage = new RegistrationFormPage();
 
     java.io.File imgStudent = new java.io.File("src/test/resources/Images/images.jpg");
 
-    SimpleDateFormat dateFormater = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
-    String stringBirthDate = dateFormater.format(faker.date().birthday(18, 70));
-    String[] birthDate = stringBirthDate.split(" ");
-    String[] hobbie = new String[] {"Sports", "Reading", "Music"};
-    String[] gender = new String[] {"Male", "Female", "Other"};
-    String[] subjects = new String[] {"Economics", "Arts", "Computer Science", "Math"};
-    String[] states = new String[] {"NCR", "Uttar Pradesh", "Haryana", "Rajastan"};
-    String[] cities = new String[] {"Delhi", "Gurgaon", "Nodia",
-                                    "Agra", "Lucknow", "Merrut",
-                                    "Karnal", "Panipat",
-                                    "Jaipur", "Jaiselmer"};
-
-    String  firstName = faker.name().firstName(),
-            lastName = faker.name().lastName(),
-            email = faker.internet().emailAddress(),
-            mobileNumber =  faker.number().digits(10),
-            address = faker.address().fullAddress(),
-            birthYear = birthDate[2],
-            birthMonth = birthDate[1],
-            birthDay = birthDate[0],
-            expectedFullName = format("%s %s", firstName, lastName),
-            expectedDateOfBirth = format("%s %s,%s", birthDay,birthMonth, birthYear),
-            expectedStateAndCity = format("%s %s", states[0], cities[1]);
+    String firstName = TestData.firstName,
+           lastName = TestData.lastName,
+           email = TestData.email,
+           mobileNumber = TestData.mobileNumber,
+           address = TestData.address,
+           birthYear = TestData.birthDate[2],
+           birthMonth = TestData.birthDate[1],
+           birthDay = TestData.birthDate[0],
+           hobbie = TestData.randomHobbie(),
+           gender = TestData.randomGender(),
+           subjectDrop = TestData.randomSubject(),
+           subjectTrue = TestData.randomSubject(),
+           expectedFullName = format("%s %s", TestData.firstName, TestData.lastName),
+           expectedDateOfBirth = format("%s %s,%s", birthDay, birthMonth, birthYear),
+           expectedStateAndCity = format("%s %s", TestData.states[0], TestData.cities[1]);
 
     public static void getScreenAndPage(String screenshotName) {
         Attach.attachScreenshot(screenshotName);
@@ -53,17 +50,19 @@ public class TestBase {
     }
 
     @BeforeAll
-    static void setUp() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+     public static void setUp() {
+        Configuration.baseUrl = urlTestedSite;
+        Configuration.remote = "https://" + login + ":" + password + "@" + urlRemoteHub;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
         Configuration.browserCapabilities = capabilities;
     }
-    @AfterEach
-    public void getVideoAndLog() {
+
+    @Step("Получим видео теста и лог браузера")
+    @AfterAll
+    public static void getVideoAndLog() {
         Attach.addVideo();
         Attach.browserConsoleLogs();
         closeWebDriver();
