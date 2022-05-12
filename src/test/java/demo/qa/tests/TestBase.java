@@ -2,15 +2,14 @@ package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
 import demo.qa.config.RemoteHubConfig;
+import demo.qa.config.SystemProperties;
 import demo.qa.data.TestData;
 import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
 import io.qameta.allure.Step;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -19,8 +18,8 @@ import static java.lang.String.format;
 public class TestBase {
 
     static RemoteHubConfig remoteHubConfig = ConfigFactory.create(RemoteHubConfig.class);
-    static String urlTestedSite = remoteHubConfig.urlTestedSite();
-    static String urlRemoteHub = remoteHubConfig.urlRemoteHub();
+    static String urlTestedSite = SystemProperties.testedSite;
+    static String urlRemoteHub = SystemProperties.remoteHub;
     static String password = remoteHubConfig.password();
     static String login = remoteHubConfig.login();
 
