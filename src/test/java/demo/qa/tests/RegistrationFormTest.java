@@ -1,6 +1,7 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import demo.qa.config.SystemProperties;
 import demo.qa.data.TestData;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
