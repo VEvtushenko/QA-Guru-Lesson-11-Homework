@@ -23,8 +23,6 @@ public class RegistrationFormTest extends TestBase {
     @DisplayName("Проверка заполнения регистрационной формы обучающегося")
     void testPracticeFormForCorrectInput() {
 
-        SelenideLogger.addListener("allure", new AllureSelenide());
-
         registrationFormPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)

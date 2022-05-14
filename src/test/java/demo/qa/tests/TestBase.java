@@ -1,12 +1,14 @@
 package demo.qa.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import demo.qa.config.RemoteHubConfig;
 import demo.qa.config.SystemProperties;
 import demo.qa.data.TestData;
 import demo.qa.helpers.Attach;
 import demo.qa.pages.RegistrationFormPage;
 import io.qameta.allure.Step;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -50,6 +52,8 @@ public class TestBase {
 
     @BeforeAll
      public static void setUp() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+
         Configuration.baseUrl = urlTestedSite;
         Configuration.remote = "https://" + login + ":" + password + "@" + urlRemoteHub;
 
