@@ -55,3 +55,9 @@ task registrationFormTest(type: Test) {
         includeTags "RegistrationFormTest"
     }
 }
+
+task simple_tests(type: Test) {
+    useJUnitPlatform{
+        includeTags "simple_tests"
+    }
+}
