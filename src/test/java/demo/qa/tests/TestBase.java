@@ -29,21 +29,21 @@ public class TestBase {
 
     java.io.File imgStudent = new java.io.File("src/test/resources/Images/images.jpg");
 
-    String firstName = TestData.firstName,
-           lastName = TestData.lastName,
-           email = TestData.email,
-           mobileNumber = TestData.mobileNumber,
-           address = TestData.address,
-           birthYear = TestData.birthDate[2],
-           birthMonth = TestData.birthDate[1],
-           birthDay = TestData.birthDate[0],
-           hobbie = TestData.randomHobbie(),
-           gender = TestData.randomGender(),
-           subjectDrop = TestData.randomSubject(),
-           subjectTrue = TestData.randomSubject(),
-           expectedFullName = format("%s %s", TestData.firstName, TestData.lastName),
-           expectedDateOfBirth = format("%s %s,%s", birthDay, birthMonth, birthYear),
-           expectedStateAndCity = format("%s %s", TestData.states[0], TestData.cities[1]);
+    final String firstName = TestData.firstName,
+                 lastName = TestData.lastName,
+                 email = TestData.email,
+                 mobileNumber = TestData.mobileNumber,
+                 address = TestData.address,
+                 birthYear = TestData.birthDate[2],
+                 birthMonth = TestData.birthDate[1],
+                 birthDay = TestData.birthDate[0],
+                 hobbie = TestData.randomHobbie(),
+                 gender = TestData.randomGender(),
+                 subjectDrop = TestData.randomSubject(),
+                 subjectTrue = TestData.randomSubject(),
+                 expectedFullName = format("%s %s", TestData.firstName, TestData.lastName),
+                 expectedDateOfBirth = format("%s %s,%s", birthDay, birthMonth, birthYear),
+                 expectedStateAndCity = format("%s %s", TestData.states[0], TestData.cities[1]);
 
     public static void getScreenAndPage(String screenshotName) {
         Attach.attachScreenshot(screenshotName);
